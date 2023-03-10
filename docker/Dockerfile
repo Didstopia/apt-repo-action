@@ -43,4 +43,5 @@ ADD key.py /usr/src/app/key.py
 
 # Setup the startup script
 # ENTRYPOINT [ "python3", "/entrypoint.py" ]
-CMD [ "python", "entrypoint.py" ]
+# CMD [ "python", "entrypoint.py" ]
+CMD [ "python", "/usr/src/app/entrypoint.py" ]
