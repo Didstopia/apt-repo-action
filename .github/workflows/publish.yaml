@@ -32,8 +32,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      ## TODO: Test if we need to checkout, or if this is done automatically?
-      # - uses: actions/checkout@v3
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v2
