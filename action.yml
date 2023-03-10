@@ -12,7 +12,7 @@ branding:
 inputs:
 
   token:
-    description: 'GitHub token used to manage the APT repository on GitHub Pages. (optional, eg. `${{ secrets.GITHUB_TOKEN }}`, default: `${{ github.token }}`))'
+    description: 'GitHub token used to manage the APT repository on GitHub Pages. (optional, eg. `GITHUB_TOKEN`, default: `${{ github.token }}`))'
     required: false
     default: ${{ github.token }}
 
@@ -70,20 +70,20 @@ inputs:
 
   ## TODO: Is this auto-generated if we don't set it?!
   public_key:
-    description: 'The GPG public key used for the APT repository. (optional, eg. `${{ secrets.GPG_PUBLIC_KEY }}`)'
+    description: 'The GPG public key used for the APT repository. (optional, eg. `GPG_PUBLIC_KEY`)'
     required: false
     default: ''
 
   ## TODO: Is this auto-generated if we don't set it?!
   private_key:
-    description: 'The GPG private key used for the APT repository. (optional, eg. `${{ secrets.GPG_PRIVATE_KEY }}`)'
+    description: 'The GPG private key used for the APT repository. (optional, eg. `GPG_PRIVATE_KEY`)'
     # required: true ## TODO: Why was this required, when the public key was not?!
     required: false
     default: ''
 
   ## TODO: Is this auto-generated if we don't set it?!
   private_key_passphrase:
-    description: 'The passphrase for the GPG private key. (optional, eg. `${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}`)'
+    description: 'The passphrase for the GPG private key. (optional, eg. `GPG_PRIVATE_KEY_PASSPHRASE`)'
     required: false
     default: ''
 
