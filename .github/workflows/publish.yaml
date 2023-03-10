@@ -58,6 +58,4 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           # tags: ghcr.io/didstopia/apt-repo-action:latest
-          # tags: ghcr.io/Didstopia/apt-repo-action:latest
-          # tags: ghcr.io/didstopia/apt-repo-action:bleeding
-          tags: ghcr.io/Didstopia/apt-repo-action:bleeding
+          tags: ghcr.io/didstopia/apt-repo-action:bleeding
