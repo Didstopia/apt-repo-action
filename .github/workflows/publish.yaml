@@ -4,23 +4,21 @@ name: Publish Docker Image
 
 on:
 
-  ## TODO: Re-enable once we have confirmed this working as intended!
+  # Run on every commit to the primary branch.
+  push:
+    branches:
+      - master
+      - main
 
-  # # Run on every commit to the primary branch.
-  # push:
-  #   branches:
-  #     - master
-  #     - main
+  # Run on every new release.
+  release:
+    types:
+      - published
 
-  # # Run on every new release.
-  # release:
-  #   types:
-  #     - published
-
-  # # Run on every new tag.
-  # create:
-  #   tags:
-  #     - 'v*'
+  # Run on every new tag.
+  create:
+    tags:
+      - 'v*'
 
   # Allow running this workflow manually.
   workflow_dispatch:

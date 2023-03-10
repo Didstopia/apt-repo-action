@@ -75,7 +75,7 @@ if __name__ == '__main__':
 
     # Clone repo
 
-    logging.info('-- Cloning current Github page --')
+    logging.info('-- Cloning current Github Pages --')
 
     github_user = repository.split('/')[0]
     github_slug = repository.split('/')[1]
@@ -107,7 +107,7 @@ if __name__ == '__main__':
     logging.debug("cwd : {}".format(os.getcwd()))
     logging.debug(os.listdir())
 
-    deb_file_handle = DebFile(filename=glob(package_path)[0])
+    deb_file_handle = DebFile(filename=glob(package_path))
     deb_file_control = deb_file_handle.debcontrol()
 
     current_metadata = {
@@ -144,7 +144,7 @@ if __name__ == '__main__':
                 'This version of this package has already been added to the repo, skipping it')
             sys.exit(0)
 
-    logging.info('-- Done cloning current Github page --')
+    logging.info('-- Done cloning current Github Pages --')
 
     # Prepare key
 
