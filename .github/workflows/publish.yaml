@@ -56,7 +56,7 @@ jobs:
         with:
           # context: '{{ defaultContext }}:docker'
           context: ./docker
-          file: Dockerfile
+          file: ./docker/Dockerfile
           push: true
           # tags: ghcr.io/didstopia/apt-repo-action:latest
           tags: ghcr.io/didstopia/apt-repo-action:bleeding
