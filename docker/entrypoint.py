@@ -107,7 +107,9 @@ if __name__ == '__main__':
     logging.debug("cwd : {}".format(os.getcwd()))
     logging.debug(os.listdir())
 
-    deb_file_handle = DebFile(filename=glob(package_path))
+    deb_file_handle = DebFile(filename=package_path)
+    # deb_file_handle = DebFile(filename=glob(package_path))
+    # deb_file_handle = DebFile(filename=glob(package_path)[0])
     deb_file_control = deb_file_handle.debcontrol()
 
     current_metadata = {
