@@ -53,7 +53,8 @@ jobs:
       - name: Build and Deploy
         uses: docker/build-push-action@v4
         with:
-          context: '{{ defaultContext }}/docker'
+          # context: '{{ defaultContext }}:docker'
+          context: docker
           file: Dockerfile
           push: true
           # tags: ghcr.io/didstopia/apt-repo-action:latest
