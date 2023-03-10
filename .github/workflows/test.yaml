@@ -56,13 +56,14 @@ jobs:
       - name: Build Docker Image (bleeding)
         uses: docker/build-push-action@v4
         with:
-          context: '{{ defaultContext }}/docker'
-          file: Dockerfile
+          # context: '{{ defaultContext }}/docker'
+          context: ./docker
+          file: ./Dockerfile
           push: false
-          tags: ghcr.io/didstopia/apt-repo-action:bleeding-test
+          tags: ghcr.io/didstopia/apt-repo-action:bleeding
       - name: Test Docker Image (bleeding)
         id: test-docker-image-bleeding
-        uses: docker://ghcr.io/didstopia/apt-repo-action:bleeding-test
+        uses: docker://ghcr.io/didstopia/apt-repo-action:bleeding
         with:
           ## TODO: Add both required and optional test inputs here!
           verbose: true

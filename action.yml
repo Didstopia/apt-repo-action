@@ -108,8 +108,10 @@ outputs:
 # Define how to run the custom GitHub Action.
 runs:
   using: 'docker'
+  ## TODO: Can we use an input to set the image tag?
   # image: 'Dockerfile'
-  image: 'docker://ghcr.io/didstopia/apt-repo-action:latest'
+  # image: 'docker://ghcr.io/didstopia/apt-repo-action:latest'
+  image: 'docker://ghcr.io/didstopia/apt-repo-action:bleeding'
   # args:
   #   - ${{ inputs.token }}
   #   - ${{ inputs.branch }}
