@@ -26,7 +26,8 @@ def detectPublicKey(gpg, key_dir, pub_key):
         logging.debug(public_import_result)
 
         if public_import_result.count != 1:
-            logging.error('Invalid public key provided, please provide 1 valid key')
+            logging.error(
+                'Invalid public key provided, please provide 1 valid key')
             sys.exit(1)
 
         with open(key_dir, 'w') as key_file:
@@ -41,7 +42,8 @@ def importPrivateKey(gpg, sign_key):
     private_import_result = gpg.import_keys(sign_key)
 
     if private_import_result.count != 1:
-        logging.error('Invalid private key provided, please provide 1 valid key')
+        logging.error(
+            'Invalid private key provided, please provide 1 valid key')
         sys.exit(1)
 
     logging.debug(private_import_result)

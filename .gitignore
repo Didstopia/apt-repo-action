@@ -1,0 +1,38 @@
+# Ignore everything by default
+*
+
+# Allow git files/folders
+!.git/
+!.git/**/*
+!.gitignore
+!.gitattributes
+
+# Allow GitHub files/folders
+!.github/
+!.github/workflows/
+!.github/workflows/*.yaml
+!.github/workflows/*.yml
+!action.yml
+!action.yaml
+
+# Allow Markdown files
+!*.md
+
+# Allow license files
+!LICENSE
+
+# Allow editorconfig
+!.editorconfig
+
+# Allow code coverage files
+!codecov.yml
+!codecov.yaml
+
+# Allow project specific files/folders
+!docker/
+!docker/**/Dockerfile*
+!docker/**/.sh
+!docker/**/*.py
+!docker/**/*.yaml
+!docker/**/*.yml
+!docker/**/requirements.txt

@@ -1,0 +1,29 @@
+# This compose file is primarily for testing the action locally.
+
+version: '3'
+
+services:
+
+  apt-repo-action:
+    image: ghcr.io/didstopia/apt-repo-action:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      GITHUB_REPOSITORY: 'foo/bar'
+      INPUT_TOKEN: 'foo'
+      INPUT_BRANCH: 'foo'
+      INPUT_FOLDER: 'foo'
+      # INPUT_PLATFORMS: '[ "amd64", "arm64" ]'
+      INPUT_PLATFORM: 'amd64'
+      # INPUT_TARGETS: '[ "bullseye" ]'
+      INPUT_TARGET: 'bullseye'
+      # INPUT_PACKAGES: '[ "foo.deb", "bar.deb" ]'
+      INPUT_PACKAGE: 'foo.deb'
+      # INPUT_VERSIONS: '[ "1.0.0", "2.0.0" ]'
+      INPUT_VERSION: '1.0.0'
+      INPUT_PUBLIC_KEY: 'foo'
+      INPUT_PRIVATE_KEY: 'foo'
+      INPUT_PRIVATE_KEY_PASSPHRASE: 'foo'
+      INPUT_DRY_RUN: 'true'
+      INPUT_VERBOSE: 'true'

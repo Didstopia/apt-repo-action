@@ -1,0 +1,98 @@
+# GitHub Actions workflow used for testing this custom GitHub Action.
+name: Tests
+
+on:
+
+  ## TODO: Re-enable once we have confirmed this working as intended!
+
+  # # Run on every commit to the primary branch.
+  # push:
+  #   branches:
+  #     - master
+  #     - main
+
+  # # Run on every pull request to the primary branch.
+  # pull_request:
+  #   branches:
+  #     - master
+  #     - main
+
+  # # Run scheduled every day at midnight.
+  # schedule:
+  #   - cron: '0 0 * * *'
+
+  # Allow running this workflow manually.
+  workflow_dispatch:
+
+jobs:
+
+  tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      ## TODO: Test for both required and optional inputs together AND separately!
+
+      ## TODO: Properly test the action as-is!
+      - name: Test Action
+        id: test-action
+        uses: ./
+        with:
+          ## TODO: Add both required and optional test inputs here!
+          verbose: true
+          dry_run: true
+      - name: Verify Test Action Output
+        run: |
+          echo "::notice::URL: ${{ steps.test-action.outputs.url }}"
+          if [ -z "${{ steps.test-action.outputs.url }}" ]; then
+            echo "::error::The action output 'url' is missing or invalid."
+            exit 1
+          fi
+
+      - name: Build Docker Image (bleeding)
+        uses: docker/build-push-action@v4
+        with:
+          context: '{{ defaultContext }}/docker'
+          file: Dockerfile
+          push: false
+          tags: ghcr.io/didstopia/apt-repo-action:bleeding-test
+      - name: Test Docker Image (bleeding)
+        id: test-docker-image-bleeding
+        uses: docker://ghcr.io/didstopia/apt-repo-action:bleeding-test
+        with:
+          ## TODO: Add both required and optional test inputs here!
+          verbose: true
+          dry_run: true
+      - name: Verify Test Docker Image (bleeding) Output
+        run: |
+          echo "::notice::URL: ${{ steps.test-docker-image-bleeding.outputs.url }}"
+          if [ -z "${{ steps.test-docker-image-bleeding.outputs.url }}" ]; then
+            echo "::error::The action output 'url' is missing or invalid."
+            exit 1
+          fi
+
+      - name: Test Docker Image (latest)
+        id: test-docker-image-latest
+        uses: docker://ghcr.io/didstopia/apt-repo-action:latest
+        with:
+          ## TODO: Add both required and optional test inputs here!
+          verbose: true
+          dry_run: true
+      - name: Verify Test Docker Image (latest) Output
+        run: |
+          echo "::notice::URL: ${{ steps.test-docker-image-latest.outputs.url }}"
+          if [ -z "${{ steps.test-docker-image-latest.outputs.url }}" ]; then
+            echo "::error::The action output 'url' is missing or invalid."
+            exit 1
+          fi
+
+      ## TODO: We would need to implement code coverage file generation
+      ##       for the Python scripts, so this could be used to upload them to codecov.io.
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/clover.xml

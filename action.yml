@@ -1,44 +1,124 @@
-name: "Github pages APT repo"
-description: "Setup and manage APT repo on Github pages"
-inputs:
-  github_token:
-    description: "Github token with commit and push scope"
-    required: true
-  repo_supported_arch:
-    description: "Newline-delimited list of supported architecture"
-    required: true
-  repo_supported_version:
-    description: "Newline-delimited list of supported (linux) version"
-    required: true
-  file:
-    description: "Newline-delimited list of .deb files"
-    required: true
-  file_target_version:
-    description: "Newline-delimited list of version target of supplied .deb file"
-    required: true
-  public_key:
-    description: "GPG public key for apt repo"
-    required: false
-  private_key:
-    description: "GPG private key for signing apt repo"
-    required: true
-  key_passphrase:
-    description: "Passphrase of GPG private key"
-    required: false
-  page_branch:
-    description: "Branch of Github pages"
-    required: false
-    default: "gh-pages"
-  repo_folder:
-    description: "Location of APT repo folder relative to root of Github pages"
-    required: false
-    default: "repo"
-  debug:
-    description: "Print debug log"
-    required: false
-runs:
-  using: "docker"
-  image: "Dockerfile"
+# Basic information for the custom GitHub Action.
+name: 'GitHub Pages APT Repository'
+description: 'Quickly and easily setup, manage and publish an APT repository hosted on GitHub Pages.'
+author: 'Didstopia'
+
+# Branding for the custom GitHub Action.
 branding:
-  icon: "upload-cloud"
-  color: "red"
+  icon: 'globe'
+  color: 'green'
+
+# The inputs for the custom GitHub Action.
+inputs:
+
+  token:
+    description: 'GitHub token used to manage the APT repository on GitHub Pages. (optional, eg. `${{ secrets.GITHUB_TOKEN }}`, default: `${{ github.token }}`))'
+    required: false
+    default: ${{ github.token }}
+
+  branch:
+    description: 'The repository branch to use for hosting the APT repository on Github Pages. (optional, eg. `"my-apt-repo"`, default: `"gh-pages"`)'
+    required: false
+    default: 'gh-pages'
+
+  ## TODO: Is this specifically the filesystem path on the branch, or on the website? Or both, since they're linked anyway?!
+  folder:
+    description: 'The location or path for the APT repository, relative to the root of the GitHub Pages deployment. (optional, eg. `"my-folder"`, default: `"packages"`)'
+    required: false
+    default: 'packages'
+
+  ## TODO: Add string array support to this intead?!
+  platform:
+    description: 'The platform/architecture of the .deb package. (optional, eg. `"amd64"`, default: `"amd64"`)'
+    required: false
+    default: 'amd64'
+  # platforms:
+  #   description: 'A JSON string array of supported architectures. (optional, e.g. `"[ "amd64", "arm64" ]"`, default: `"[ "amd64" ]"`)'
+  #   required: false
+  #   default: '[ "amd64" ]'
+
+  ## TODO: What do we need this for?!
+  # targets:
+  #   description: 'A JSON string array of supported linux version targets. (optional, e.g. `"[ "buster", "bullseye" ]"`, default: `"[ "bullseye" ]"`)'
+  #   # required: true
+  #   required: false
+  #   default: '[ "bullseye" ]'
+  target:
+    description: 'The target OS version/name for the .deb package. (optional, eg. `"bullseye"`, default: `"bullseye"`)'
+    required: false
+    default: 'bullseye'
+
+  ## TODO: Add string array support to this intead?!
+  # packages:
+  #   description: 'A JSON string array of .deb package file paths to include in the APT repository. (required, eg. `"[ "package.deb", "package2.deb" ]"`)'
+  #   required: true
+  #   default: '[ ]'
+  package:
+    description: 'The .deb package file path to include in the APT repository. (required, eg. `"foo/bar/package.deb"`)'
+    required: true
+    # default: ''
+
+  ## TODO: How do we want to handle this?!
+  # versions:
+  #   description: 'A JSON string array of target versions for the supplied .deb packages. (required, eg. `"[ "1.0.0", "1.0.1" ]"`)'
+  #   required: true
+  #   default: '[ ]'
+  version:
+    description: 'The full version string for the supplied .deb package. (required, eg. `"1.0.0"`)'
+    required: true
+    # default: ''
+
+  ## TODO: Is this auto-generated if we don't set it?!
+  public_key:
+    description: 'The GPG public key used for the APT repository. (optional, eg. `${{ secrets.GPG_PUBLIC_KEY }}`)'
+    required: false
+    default: ''
+
+  ## TODO: Is this auto-generated if we don't set it?!
+  private_key:
+    description: 'The GPG private key used for the APT repository. (optional, eg. `${{ secrets.GPG_PRIVATE_KEY }}`)'
+    # required: true ## TODO: Why was this required, when the public key was not?!
+    required: false
+    default: ''
+
+  ## TODO: Is this auto-generated if we don't set it?!
+  private_key_passphrase:
+    description: 'The passphrase for the GPG private key. (optional, eg. `${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}`)'
+    required: false
+    default: ''
+
+  dry_run:
+    description: 'Enable dry-run mode, which will not create or modify the APT repository, or GitHub Pages, in any way. (optional, eg. `true`, default: `false`)'
+    required: false
+
+  verbose:
+    description: 'Enable more verbose logging, useful for debugging. (optional, eg. `true`, default: `false`)'
+    required: false
+
+## TODO: How can we set the output? Can we simply set it inside the Docker container, from the Python script?!
+# The outputs for the custom GitHub Action.
+outputs:
+  url:
+    description: 'The URL of the hosted APT repository on GitHub pages.'
+
+## TODO: Utilize proper exit codes for any issues!
+## TODO: Log to GitHub Actions log with the correct log level (info, warning, error, etc.)!
+## TODO: Handle tagging, releases and testing properly! (see: https://docs.github.com/en/actions/creating-actions/releasing-and-maintaining-actions)
+
+# Define how to run the custom GitHub Action.
+runs:
+  using: 'docker'
+  # image: 'Dockerfile'
+  image: 'docker://ghcr.io/didstopia/apt-repo-action:latest'
+  # args:
+  #   - ${{ inputs.token }}
+  #   - ${{ inputs.branch }}
+  #   - ${{ inputs.folder }}
+  #   - ${{ fromJson(inputs.platforms) }}
+  #   - ${{ fromJson(inputs.targets) }}
+  #   - ${{ fromJson(inputs.packages) }}
+  #   - ${{ fromJson(inputs.versions) }}
+  #   - ${{ inputs.public_key }}
+  #   - ${{ inputs.private_key }}
+  #   - ${{ inputs.private_key_passphrase }}
+  #   - ${{ inputs.verbose }}
