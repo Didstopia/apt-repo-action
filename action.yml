@@ -12,7 +12,7 @@ branding:
 inputs:
 
   token:
-    description: 'GitHub token used to manage the APT repository on GitHub Pages. (optional, eg. `GITHUB_TOKEN`, default: `${{ github.token }}`))'
+    description: 'GitHub token used to manage the APT repository on GitHub Pages. (optional, eg. `GITHUB_TOKEN`, default: `github.token`))'
     required: false
     default: ${{ github.token }}
 
